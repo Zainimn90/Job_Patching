@@ -6,7 +6,7 @@ const schedule = require("node-schedule");
 
 const GetNorekLessThn15Controller = require("./controllers/GetNorekLessThn15Controller");
 const GetDISBINPROCESSController = require("./controllers/GetDISBINPROCESSController");
-const GetJobCPITnullController = require("./controllers/GetJobCPITnullController");
+const GetJobCPITnullController = require("./controllers/GetCPITnullController");
 
 const NorekLessThn15Controller = require("./controllers/NorekLessThn15Controller");
 const DISBINPROCESSController = require("./controllers/DISBINPROCESSController");
