@@ -3,10 +3,10 @@ const serviceOch = require("../services/CPITnull")
 const logger = require("../logger/logger")
 const db_och = require("../connection/config_och_update")
 
-class GetJobCPITnullController {
+class GetCPITnullController {
     static async runJob() {
         try {
-            logger.info("[GetJobCPITnullController]")
+            logger.info("[GetCPITnullController]")
 
             const data = await serviceOch.getJobCPITnull(db_och)
             if (data.length == 0) return sendAlert(`NO NEED INSERT CPIT`, "CPIT IS NULL")
@@ -15,7 +15,7 @@ class GetJobCPITnullController {
             return sendAlert(`NEED INSERT CPIT ${data.length} !!!`, "CPIT IS NULL")
         } catch (error) {
             logger.error(
-                `[Get alert message from GetJobCPITnullController: ${error}]`
+                `[Get alert message from GetCPITnullController: ${error}]`
             )
             return sendAlert(`ERROR GET CPIT IS NULL !!!`, "CPIT IS NULL")
         }
@@ -23,4 +23,4 @@ class GetJobCPITnullController {
     
 }
 
-module.exports = GetJobCPITnullController
+module.exports = GetCPITnullController

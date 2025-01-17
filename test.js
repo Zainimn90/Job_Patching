@@ -5,7 +5,8 @@ const DISBINPROCESSController = require("./controllers/DISBINPROCESSController")
 const NorekLessThn15Controller = require("./controllers/NorekLessThn15Controller");
 const GetNorekLessThn15Controller = require("./controllers/GetNorekLessThn15Controller");
 const GetDISBINPROCESSController = require("./controllers/GetDISBINPROCESSController");
-const GetJobCPITnullController = require("./controllers/GetJobCPITnullController");
+const GetJobCPITnullController = require("./controllers/GetCPITnullController");
+const GetJobCPITnullController = require("./controllers/CPITnullController");
 
 
 // GetNorekLessThn15Controller.runJob()

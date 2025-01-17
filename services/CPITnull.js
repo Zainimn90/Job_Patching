@@ -1,5 +1,7 @@
 const logger = require("../logger/logger")
-const { getCpitNull, insertCpitNull, updateCpit } = require("../query/och/getCpitNull")
+const { getCpitNull, insertCpitNull, updateCpit, getCpitByAppId } = require("../query/och/getCpitNull")
+const cifService = require("./CifService")
+const sacaService = require("./SacaRayaService")
 
 class CPITnull {
     static async getJobCPITnull(db_och) {
@@ -14,22 +16,14 @@ class CPITnull {
         }
     }
 
-    static async jobCPITnull() {
+    static async jobCPITnull(db_och) {
         try {
-            logger.info("[Run Service getJobCPITnull || OCH]")
+            logger.info("[Run Service jobCPITnull || OCH]")
 
-            let rowsCif = []
-            const { rows } = await run(db.query(getCpitNull))
-            
+            const { rows } = await db_och.query(getCpitNull)
             if (rows.length < 1) return rows
-            for (let i = 0; i < rows.length; i++) {
-                rowsCif.push(rows[i].application_id)
-            }
 
-            const text = rowsCif.join(', ');
-            await fs.writeFile('appid.txt', text);
-
-            await run(db_update.query(insertCpitNull))
+            await run(db_och.query(insertCpitNull))
 
             for (let i = 0; i < rows.length; i++) {
                 let bnakCode = rows[i].bank_code
@@ -50,11 +44,23 @@ class CPITnull {
                 await run(db_update.query(updateCpit(nama, gender, dob, pob, address, appid, avaliableBalance)))
             }
 
-            logger.info("[Done Job CPITnull || OCH]")
+            return rows
+        } catch (error) {
+            await db_och.query('ROLLBACK');
+            await db_lcl.query('ROLLBACK');
+            logger.error(`[Run Service jobCPITnull || OCH: ${error}]`)
+            return false
+        }
+    }
+
+    static async getCPIT(db_och, appId) {
+        try {
+            logger.info("[Run Service getCPIT || OCH]")
+            const { rows } = await db_och.query(getCpitByAppId(appId))
 
             return rows
         } catch (error) {
-            logger.error(`[Run Service getJobCPITnull || OCH: ${error}]`)
+            logger.error(`[Run Service getCPIT || OCH: ${error}]`)
             return false
         }
     }

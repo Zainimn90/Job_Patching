@@ -7,7 +7,7 @@ async function singleGroup(data, db_och, db_lcl, flag) {
         const appId = data[i][0].application_id
         const loanAccount = data[i][0].loan_account
         const rModId = data[i][0].r_mod_id
-        console.log(appId + " ============================================================== ");
+
         let dataBefore = {
             application_id: data[i][0].application_id,
             application_status: data[i][0].application_status
@@ -37,7 +37,6 @@ async function singleGroup(data, db_och, db_lcl, flag) {
         }
 
         if (data[i][0].status_account == "aktif") {
-            console.log(data[i][0].status_account + " <<<<<<<<<<<<<<<<<<<<< ");
             dataAfter.application_status = "LOAN_CREATED"
             dataInsertAfter.application_status = "LOAN_CREATED"
             dataInsertAfter.remarks = "Loan Created"

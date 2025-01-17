@@ -42,7 +42,6 @@ join ececuser.capwd x on
 		cp.application_id = c.application_id );`
 
 	const insertCpitNull = `
-
 	-- TEMP SOLUTION (CPIT NULL)
 INSERT INTO ececuser.cpit (
     db_ts,
@@ -136,9 +135,14 @@ cpit.application_id in (${appid});
 `
 	}
 
+const getCpitByAppId = (appId)=> {
+	return `select * from ececuser.cpit where application_id in (${appId})`
+}
+
 module.exports = { 
 	getCpitNull,
 	insertCpitNull,
 	updateCpit,
-	getCpit
+	getCpit,
+	getCpitByAppId
 }
