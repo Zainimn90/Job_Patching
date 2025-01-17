@@ -28,7 +28,7 @@ class CPITnull {
             for (let i = 0; i < rows.length; i++) {
                 let bnakCode = rows[i].bank_code
 
-                const { dataCif } = await cifService.getCif(rows[i].legacy_cif, bnakCode)
+                const { dataCif } = await cifService.getCif(rows[i].legacy_cif, bnakCode, db_och)
 
                 const appid = rows[i].application_id
                 const nama = dataCif.nama.replace(/'/g,"''")
@@ -37,7 +37,7 @@ class CPITnull {
                 const address = `${dataCif.address.replace(/'/g,"''")} RT.${dataCif.addressRT} / RW.${dataCif.addressRW}, KEL.${dataCif.kelurahan.replace(/'/g,"''")}, KEC.${dataCif.kecamatan.replace(/'/g,"''")}, ${dataCif.city.replace(/'/g,"''")}, ${dataCif.province.replace(/'/g,"''")}|null|null|null|null|${dataCif.zipCode}`
                 const pob = dataCif.placeOfBirth.replace(/'/g,"''")
 
-                const { data } = await sacaService.getSacaRaya(rows[i].payroll_acc_num, bnakCode)
+                const { data } = await sacaService.getSacaRaya(rows[i].payroll_acc_num, bnakCode, db_och)
 
                 const avaliableBalance = data.avaliableBalance
 
@@ -47,7 +47,6 @@ class CPITnull {
             return rows
         } catch (error) {
             await db_och.query('ROLLBACK');
-            await db_lcl.query('ROLLBACK');
             logger.error(`[Run Service jobCPITnull || OCH: ${error}]`)
             return false
         }
@@ -60,6 +59,7 @@ class CPITnull {
 
             return rows
         } catch (error) {
+            await db_och.query('ROLLBACK');
             logger.error(`[Run Service getCPIT || OCH: ${error}]`)
             return false
         }

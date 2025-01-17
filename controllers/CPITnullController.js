@@ -12,10 +12,8 @@ class CPITnullController {
             await db_och.query('BEGIN');
             await db_lcl.query('BEGIN');
 
-            const data = await service.jobCPITnull(db_och, db_lcl)
-
+            const data = await service.jobCPITnull(db_och)
             if (data.length == 0) return sendAlert(`NO NEED INSERT CPIT`)
-
             if (!data) return sendAlert(`ERROR JOB CPIT !!!`, "CPIT IS NULL")
 
             let rowsAppId = []

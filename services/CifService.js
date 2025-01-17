@@ -2,7 +2,7 @@ const axios = require("axios");
 const logger = require("../logger/logger")
 
 class SacaCifService {
-  static async getCif(cifNo, bankCode) {
+  static async getCif(cifNo, bankCode, db_och) {
     try {
       logger.info("[Run Service getCif || CIF DETAIL]");
 
@@ -17,9 +17,8 @@ class SacaCifService {
 
       return { dataCif: data.body, err: null };
     } catch (err) {
-      logger.error(
-        `[Failed to get data from getCif: ${err}]`
-      );
+      await db_och.query('ROLLBACK');
+      logger.error(`[Failed to get data from getCif: ${err}]`);
       return { data: null, err };
     }
   }

@@ -2,7 +2,7 @@ const axios = require("axios");
 const logger = require("../logger/logger")
 
 class SacaRayaService {
-  static async getSacaRaya(norek, bankCode) {
+  static async getSacaRaya(norek, bankCode, db_och) {
     try {
       logger.info("[Run Service getSacaRaya || SACA DETAIL]");
 
@@ -17,9 +17,8 @@ class SacaRayaService {
 
       return { data: data.body, err: null };
     } catch (err) {
-      logger.error(
-        `[Failed to get data from getSacaRaya: ${err}]`
-      );
+      await db_och.query('ROLLBACK');
+      logger.error(`[Failed to get data from getSacaRaya: ${err}]`);
       return { data: null, err };
     }
   }
