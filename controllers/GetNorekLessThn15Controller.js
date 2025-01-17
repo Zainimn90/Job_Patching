@@ -1,7 +1,7 @@
 const sendAlert = require("../api/telegram")
 const service = require("../services/NorekLessThn15")
 const logger = require("../logger/logger")
-const db_och = require("../connection/config_och_update");
+const db_och = require("../connection/config_och_update")
 
 class GetNorekLessThn15Controller {
     static async runJob() {

@@ -6,6 +6,7 @@ const schedule = require("node-schedule");
 
 const GetNorekLessThn15Controller = require("./controllers/GetNorekLessThn15Controller");
 const GetDISBINPROCESSController = require("./controllers/GetDISBINPROCESSController");
+const GetJobCPITnullController = require("./controllers/GetJobCPITnullController");
 
 const NorekLessThn15Controller = require("./controllers/NorekLessThn15Controller");
 const DISBINPROCESSController = require("./controllers/DISBINPROCESSController");
@@ -18,15 +19,11 @@ bot.help(async (ctx) => {
   await ctx.reply(`
 1. /getNorekLessThan15
 2. /getDisburseInProcessYesterday
+2. /getCpitIsNull
 
 3. /patchNorekLessThan15
 4. /patchgetDisburseInProcessYesterday
   `);
-});
-
-bot.command("/getNorekLessThan15", async (ctx) => {
-  if (Validate(ctx) == false) return false
-  return await JobWlDailyConttroller.runJob(ctx);
 });
 
 bot.on("message", async (ctx) => {    
@@ -40,6 +37,10 @@ bot.on("message", async (ctx) => {
 
     if (caption == "/getDisburseInProcessYesterday") {
         return await GetDISBINPROCESSController.runJob(ctx);
+    }
+
+    if (caption == "/getCpitIsNull") {
+      return await GetJobCPITnullController.runJob(ctx);
     }
 
     if (caption == "/patchNorekLessThan15") {
